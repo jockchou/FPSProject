@@ -7,6 +7,8 @@ AFPSCharacter::AFPSCharacter()
 {
 	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = false;
+
+	this->AbilitySystem = CreateDefaultSubobject<UAbilitySystemComponent>("AbilitySystem");
 }
 
 // Called when the game starts or when spawned
@@ -31,14 +33,21 @@ void AFPSCharacter::Tick(float DeltaTime)
 void AFPSCharacter::SetupPlayerInputComponent(UInputComponent *PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
+
+	PlayerInputComponent->BindAxis("MoveForward", this, &AFPSCharacter::MoveForward);
+	PlayerInputComponent->BindAxis("MoveRight", this, &AFPSCharacter::MoveRight);
 }
 
 // MoveRight
 void AFPSCharacter::MoveRight(float Val)
 {
+	FVector Direction = FRotationMatrix(Controller->GetControlRotation()).GetScaledAxis(EAxis::Y);
+	AddMovementInput(Direction, Val);
 }
 
 // MoveForward
 void AFPSCharacter::MoveForward(float Val)
 {
+	FVector Direction = FRotationMatrix(Controller->GetControlRotation()).GetScaledAxis(EAxis::X);
+	AddMovementInput(Direction, Val);
 }
