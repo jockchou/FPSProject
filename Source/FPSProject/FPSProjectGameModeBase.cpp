@@ -4,7 +4,9 @@
 
 AFPSProjectGameModeBase::AFPSProjectGameModeBase()
 {
-    this->GameStartText = TEXT("Hello World, this is FPSGameModeBase!");
+    FText MsgText = NSLOCTEXT("Debug", "FPSProjectGameModeBase", "Hello World, FPSProjectGameModeBase!");
+
+    this->GameStartText = MsgText.ToString();
 }
 void AFPSProjectGameModeBase::StartPlay()
 {
