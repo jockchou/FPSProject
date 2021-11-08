@@ -20,7 +20,8 @@ AFPSCharacter::AFPSCharacter()
 	check(FPSMesh != nullptr);
 	FPSMesh->SetOnlyOwnerSee(true);
 	FPSMesh->SetupAttachment(FPSCameraComponent);
-
+	FPSMesh->bCastDynamicShadow = false;
+	FPSMesh->CastShadow = false;
 
 	GetMesh()->SetOwnerNoSee(true);
 
