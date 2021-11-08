@@ -3,11 +3,16 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "AbilitySystemInterface.h"
+#include "AbilitySystemComponent.h"
 #include "GameFramework/Character.h"
+#include "Camera/CameraComponent.h"
+#include "Components/CapsuleComponent.h"
 #include "FPSCharacter.generated.h"
 
+
 UCLASS()
-class FPSPROJECT_API AFPSCharacter : public ACharacter
+class FPSPROJECT_API AFPSCharacter : public ACharacter, public IAbilitySystemInterface
 {
 	GENERATED_BODY()
 
@@ -16,7 +21,14 @@ public:
 	AFPSCharacter();
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "AbilitySystemComponent")
-	AbilitySystemComponent *AbilitySystem;
+	UAbilitySystemComponent* AbilitySystem;
+
+	UPROPERTY(VisibleAnywhere)
+	UCameraComponent* FPSCameraComponent;
+
+	UPROPERTY(VisibleDefaultsOnly, Category = Mesh)
+	USkeletalMeshComponent* FPSMesh;
+
 
 protected:
 	// Called when the game starts or when spawned
@@ -27,7 +39,10 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	// Called to bind functionality to input
-	virtual void SetupPlayerInputComponent(class UInputComponent *PlayerInputComponent) override;
+	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+
+
+	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 
 	UFUNCTION(BlueprintCallable)
 	void MoveForward(float Val);
